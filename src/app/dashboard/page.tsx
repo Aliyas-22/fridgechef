@@ -43,7 +43,7 @@ export default function Dashboard() {
       if (!res.ok) throw new Error(data.error);
       setRecipes(data.recipes);
       toast.success('3 recipes ready! 🎉');
-    } catch (err: any) { toast.error(err.message || 'Something went wrong'); }
+    } catch (err: unknown) { toast.error(err instanceof Error ? err.message : 'Something went wrong'); }
     setLoading(false);
   };
 
@@ -108,7 +108,7 @@ export default function Dashboard() {
             {/* Input card */}
             <div className="card" style={{ padding: 20, marginBottom: 16 }}>
               <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#1B2D6B', marginBottom: 4 }}>
-                What's in your fridge? 🧊
+                What&apos;s in your fridge? 🧊
               </h2>
               <p style={{ color: '#7A8AAD', fontSize: '0.875rem', marginBottom: 16 }}>
                 Add your ingredients one by one
@@ -265,7 +265,7 @@ export default function Dashboard() {
               <div style={{ textAlign: 'center', padding: '48px 20px' }}>
                 <div style={{ fontSize: '3.5rem', marginBottom: 12 }}>🥬</div>
                 <p style={{ color: '#7A8AAD', fontWeight: 600, marginBottom: 4 }}>Add ingredients above</p>
-                <p style={{ color: '#B0AEAD', fontSize: '0.875rem' }}>We'll turn them into 3 amazing recipes</p>
+                <p style={{ color: '#B0AEAD', fontSize: '0.875rem' }}>We&apos;ll turn them into 3 amazing recipes</p>
               </div>
             )}
           </div>

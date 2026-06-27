@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     await User.create({ name, email, password: hashed });
 
     return NextResponse.json({ message: 'Account created successfully' }, { status: 201 });
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }

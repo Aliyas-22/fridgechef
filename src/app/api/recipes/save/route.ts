@@ -13,12 +13,12 @@ export async function POST(req: NextRequest) {
     await connectDB();
 
     const saved = await Recipe.create({
-      userId: (session.user as any).id,
+      userId: (session.user as { id: string }).id,
       ...recipe,
     });
 
     return NextResponse.json({ message: 'Recipe saved!', id: saved._id });
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: 'Failed to save recipe' }, { status: 500 });
   }
 }

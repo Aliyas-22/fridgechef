@@ -17,9 +17,9 @@ export async function POST(req: NextRequest) {
     
     const recipes = await generateRecipes(ingredients, preferences);
     return NextResponse.json({ recipes });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error('❌ Generate error:', err.message);
     console.error('❌ Full error:', err);
-    return NextResponse.json({ error: err.message || 'Failed to generate recipes' }, { status: 500 });
+    return NextResponse.json({ error: err instanceof Error ? err.message : 'Failed to generate recipes' }, { status: 500 });
   }
 }

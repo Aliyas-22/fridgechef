@@ -79,7 +79,7 @@ export default function RecipeCard({ recipe, showSave = true }: Props) {
               ))}
               {recipe.tips && recipe.tips.length > 0 && (
                 <div className="mt-4 p-4 rounded-xl bg-gradient-to-r from-cyan-500/8 to-purple-500/8 border border-cyan-500/15">
-                  <p className="text-xs font-bold text-cyan-400 mb-2 uppercase tracking-wider">✨ Chef's Tips</p>
+                  <p className="text-xs font-bold text-cyan-400 mb-2 uppercase tracking-wider">✨ Chef&apos;s Tips</p>
                   {recipe.tips.map((tip, i) => <p key={i} className="text-xs text-white/50 leading-relaxed">• {tip}</p>)}
                 </div>
               )}
