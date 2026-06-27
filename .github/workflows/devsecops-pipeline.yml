@@ -107,7 +107,7 @@ jobs:
     name: "Stage 6 — Push to DockerHub"
     runs-on: ubuntu-latest
     needs: image-scan
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.event_name == 'push'  
     steps:
       - uses: actions/download-artifact@v4
         with:
