@@ -12,14 +12,10 @@ export async function POST(req: NextRequest) {
     if (!ingredients || ingredients.length === 0)
       return NextResponse.json({ error: 'No ingredients provided' }, { status: 400 });
 
-    console.log('🔑 Gemini key exists:', !!process.env.GEMINI_API_KEY);
-    console.log('🥕 Ingredients:', ingredients);
-    
     const recipes = await generateRecipes(ingredients, preferences);
     return NextResponse.json({ recipes });
   } catch (err: unknown) {
-    console.error('❌ Generate error:', err.message);
-    console.error('❌ Full error:', err);
-    return NextResponse.json({ error: err instanceof Error ? err.message : 'Failed to generate recipes' }, { status: 500 });
+    const message = err instanceof Error ? err.message : 'Failed to generate recipes';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

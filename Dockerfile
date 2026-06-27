@@ -6,12 +6,17 @@ RUN npm ci
 
 COPY . .
 
-# Pass dummy env vars so Next.js build doesn't crash
-# Real values are injected at runtime via docker run -e
-ENV MONGODB_URI=mongodb://placeholder
-ENV NEXTAUTH_SECRET=placeholder-secret-for-build
-ENV NEXTAUTH_URL=http://localhost:3000
-ENV GEMINI_API_KEY=placeholder
+# Build-time dummy values — real values injected at runtime
+# Using ARG instead of ENV to avoid Hadolint secret warnings
+ARG MONGODB_URI=mongodb://placeholder
+ARG NEXTAUTH_SECRET=placeholder-secret-for-build
+ARG NEXTAUTH_URL=http://localhost:3000
+ARG GEMINI_API_KEY=placeholder
+
+ENV MONGODB_URI=$MONGODB_URI
+ENV NEXTAUTH_SECRET=$NEXTAUTH_SECRET
+ENV NEXTAUTH_URL=$NEXTAUTH_URL
+ENV GEMINI_API_KEY=$GEMINI_API_KEY
 
 RUN npm run build
 
@@ -27,7 +32,6 @@ COPY --from=builder /app/public ./public
 ENV NODE_ENV=production
 
 USER appuser
-
 EXPOSE 3000
 
 CMD ["node", "server.js"]

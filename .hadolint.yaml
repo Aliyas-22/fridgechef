@@ -1,0 +1,5 @@
+ignore:
+  - DL3018
+  - DL3059
+trustedRegistries:
+  - docker.io
