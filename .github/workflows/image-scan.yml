@@ -1,0 +1,41 @@
+name: Docker Image Scan
+
+on:
+  push:
+    branches: [main, feat/docker]
+
+jobs:
+  trivy-image-scan:
+    name: Trivy - Scan for CVEs
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build image for scanning
+        run: |
+          docker build \
+            --build-arg MONGODB_URI=mongodb://placeholder \
+            --build-arg NEXTAUTH_SECRET=placeholder-build \
+            --build-arg NEXTAUTH_URL=http://localhost:3000 \
+            --build-arg GEMINI_API_KEY=placeholder \
+            -t fridgechef:scan .
+
+      - name: Trivy scan - show all HIGH + CRITICAL
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: fridgechef:scan
+          format: table
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: '0'
+
+      - name: Trivy scan - fail on CRITICAL
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: fridgechef:scan
+          format: table
+          severity: CRITICAL
+          ignore-unfixed: true
+          exit-code: '1'

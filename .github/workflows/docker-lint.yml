@@ -1,0 +1,22 @@
+name: Dockerfile Lint
+
+on:
+  push:
+    branches: [main, feat/docker]
+  pull_request:
+    branches: [main]
+
+jobs:
+  hadolint:
+    name: Hadolint - Lint Dockerfile
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Lint Dockerfile with Hadolint
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
+          failure-threshold: error
